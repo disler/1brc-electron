@@ -95,11 +95,14 @@ const headers = [
     sortable: false,
     value: "station",
   },
-  { align: "center", title: "Min", value: "min" },
-  { align: "center", title: "Mean", value: "mean" },
-  { align: "center", title: "Max", value: "max" },
-  { align: "center", title: "Measurement", value: "measurement" },
+  { align: "center", title: "Min", value: "min", table: "brc" },
+  { align: "center", title: "Mean", value: "mean", table: "brc" },
+  { align: "center", title: "Max", value: "max", table: "brc" },
+  { align: "center", title: "Measurement", value: "measurement", table: "measurements" },
 ];
+
+const brcHeaders = headers.filter(header => header.table === 'brc');
+const measurementsHeaders = headers.filter(header => header.table === 'measurements');
 
 const totalItems = ref(1000000);
 const loading = ref(false);
