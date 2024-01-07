@@ -110,6 +110,8 @@ const search = ref("");
 const itemsPerPage = ref(10);
 const page = ref(1);
 const table = ref("brc");
+const tables = ref(['brc', 'measurements']);
+const selectedTable = ref('brc');
 import { watch } from "vue";
 
 function loadItems() {
@@ -139,6 +141,10 @@ onMounted(() => {
 watch(page, () => {
   loadItems();
 });
+watch(selectedTable, (newTable) => {
+  table.value = newTable;
+  loadItems();
+});
 
 function getBrcPage(params) {
   window.electronAPI.getBrcPage(params);
@@ -148,9 +154,16 @@ function getBrcPage(params) {
 <template>
   <div>
     <h1>1 Billion Row Challenge - Electron Edition</h1>
+    <v-select
+      v-model="selectedTable"
+      :items="tables"
+      label="Select Table"
+      @change="loadItems"
+    ></v-select>
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
+      :headers="table.value === 'brc' ? brcHeaders : measurementsHeaders"
       :items-length="totalItems"
       :items="brcRows"
       :loading="loading"
