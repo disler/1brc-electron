@@ -1,8 +1,9 @@
 /**
  * This script generates a file with random weather measurements.
  * Consumes data/weather_stations.csv
+ * Outputs data/measurements.txt
  * 
-EXAPMLE:
+Example Output:
 
     Nouakchott;30.8
     JuXi;26.7

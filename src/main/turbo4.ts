@@ -1,3 +1,7 @@
+/**
+ * Simple, Minimal, Opinionated OpenAI Assistants API wrapper
+ */
+
 import OpenAI from 'openai';
 import * as dotenv from 'dotenv';
 import { RunnableToolFunction, RunnableToolFunctionWithParse } from 'openai/lib/RunnableFunction';
