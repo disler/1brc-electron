@@ -89,11 +89,16 @@ const brcRows = ref<BrcRow[]>([
 ]);
 
 const headers = [
-  { text: "Station", align: "start", sortable: false, value: "station" },
-  { text: "Min", value: "min" },
-  { text: "Mean", value: "mean" },
-  { text: "Max", value: "max" },
-  { text: "Measurement", value: "measurement" },
+  {
+    align: "center",
+    title: "Station",
+    sortable: false,
+    value: "station",
+  },
+  { align: "center", title: "Min", value: "min" },
+  { align: "center", title: "Mean", value: "mean" },
+  { align: "center", title: "Max", value: "max" },
+  { align: "center", title: "Measurement", value: "measurement" },
 ];
 
 const totalItems = ref(1000000);
@@ -102,7 +107,7 @@ const search = ref("");
 const itemsPerPage = ref(10);
 const page = ref(1);
 const table = ref("brc");
-import { watch } from 'vue';
+import { watch } from "vue";
 
 function loadItems() {
   const pagination: Pagination = {
