@@ -1,75 +1,125 @@
-<div align="center"> 
+# 1 Billion Row Challenge with Electron, DuckDB, Prompts, Cursor and Aider
+> Progressing our Agentic engineering abilities by building a 1 billion row challenge app with Electron, DuckDB, Prompts, Cursor and Aider
 
-# Electron Vue Template
-  
-<img width="794" alt="image" src="https://user-images.githubusercontent.com/32544586/222748627-ee10c9a6-70d2-4e21-b23f-001dd8ec7238.png">
+## Setup
+- `yarn install`
+- `cp .env.sample .env` - Update the .env file with your openai key
+- `yarn run generate <number of rows>` - Generate the data
+  - *'I wrote the generation script (scripts/createMeasurements.ts) to be memory efficient, but it still takes a while to generate the data.'*
+  - *'On my M2 64gb ram 1 billion rows took ~8 minutes to generate'. Adjust accordingly.*
+- `yarn run dev` - Start the app
 
-A simple starter template for a **Vue3** + **Electron** TypeScript based application, including **ViteJS** and **Electron Builder**.
-</div>
+### Resources
+- Original Electron + Vite + Vue + Typescript [Starter](https://github.com/Deluze/electron-vue-template)
+- [1 BRC Original](https://www.morling.dev/blog/one-billion-row-challenge/)
+- [1 BRC DuckDB Post](https://rmoff.net/2024/01/03/1%EF%B8%8F%E2%83%A3%EF%B8%8F-1brc-in-sql-with-duckdb/)
+- [Aider](https://aider.chat/)
+- [Cursor](https://cursor.sh/)
+- [Electron Vite Vue Typescript Starter](https://github.com/Deluze/electron-vue-template)
+- [Vuetify Server Table](https://vuetifyjs.com/en/components/data-tables/server-side-tables/#examples)
+- [Vuetify Pagination](https://vuetifyjs.com/en/components/paginations/#disabled)
+- [Electron](https://www.electronjs.org/)
 
-## About
+## DuckDB Commands
+- `duckdb` - Start DuckDB Shell
+- In the shell
+  - `.open <database>` - Open a database
+  - `.tables` - List all tables
+  - `.schema <table>` - Show schema of a table
+  - `.quit` - Quit the shell
+  - `.help` - Show help
+- `duckdb <path/to/database.duckdb>` - Start Shell with database
+- `duckdb <path/to/database.duckdb> <sql statement>` - Run SQL statement on database
+- `duckdb <path/to/database.duckdb> <duckdb command>` - Run DuckDb statement on database
 
-This template utilizes [ViteJS](https://vitejs.dev) for building and serving your (Vue powered) front-end process, it provides Hot Reloads (HMR) to make development fast and easy ⚡ 
+## Generate the Data
+- `yarn run generate <number of rows>`
 
-Building the Electron (main) process is done with [Electron Builder](https://www.electron.build/), which makes your application easily distributable and supports cross-platform compilation 😎
+## Duck DB Generation Commands
+- Prove our agents did their jobs
+  - `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql`
+  - `duckdb ./data/db.duckdb .tables`
+  - `duckdb ./data/db.duckdb from measurements limit 5`
+  - `duckdb ./data/db.duckdb from brc limit 5`
+- Run page table script
+  - `bun ./data/agentOutput/pageTable.ts`
 
-## Getting started
+## Diagraming
 
-Click the green **Use this template** button on top of the repository, and clone your own newly created repository.
+### Tier 1 Detail
 
-**Or..**
+```mermaid
+flowchart LR
 
-Clone this repository: `git clone git@github.com:Deluze/electron-vue-template.git`
+    subgraph database
 
+    end
 
-### Install dependencies ⏬
+    subgraph electron:main
 
-```bash
-npm install
+    end
+
+    subgraph electron:renderer
+
+    end
+
+     database <--> electron:main <--> electron:renderer 
 ```
 
-### Start developing ⚒️
+### Tier 2 Detail
 
-```bash
-npm run dev
+```mermaid
+flowchart LR
+
+    subgraph database
+    subgraph duckdb tables
+        d_a["brc: {station, min, max, mean}"]
+        d_b["measurements: {station, measurement}"]
+    end
+        
+    end
+
+    subgraph electron:main
+        em_a[src/main/turbo4.ts]
+        em_b[scripts/createMeasurements.ts]
+        em_c[src/main/main.ts]
+    end
+
+    subgraph electron:renderer
+        er_a[src/renderer/App.vue]
+    end
+
+     database <--CRUD--> electron:main <--Communication vs Preload.ts--> electron:renderer 
 ```
 
-## Additional Commands
+### Tier 3 Knowledgebase
+```mermaid
+flowchart LR
 
-```bash
-npm run dev # starts application with hot reload
-npm run build # builds application, distributable files can be found in "dist" folder
+    subgraph database
+    subgraph duckdb tables
+        d_a["brc: {station, min, max, mean}"]
+        d_b["measurements: {station, measurement}"]
+    end
+        
+    end
 
-# OR
+    subgraph electron:main
+        em_a[src/main/turbo4.ts]
+        em_b[scripts/createMeasurements.ts]
+        em_c[src/main/main.ts]
+    end
 
-npm run build:win # uses windows as build target
-npm run build:mac # uses mac as build target
-npm run build:linux # uses linux as build target
-```
+    subgraph electron:renderer
+        er_a[src/renderer/App.vue]
+    end
 
-Optional configuration options can be found in the [Electron Builder CLI docs](https://www.electron.build/cli.html).
-## Project Structure
+    subgraph knowledge_base
+        kb_a[1brc OG Gunnar post]
+        kb_b[1brc DuckDB post]
+        kb_c[DuckDB Documentation]
+    end
 
-```bash
-- scripts/ # all the scripts used to build or serve your application, change as you like.
-- src/
-  - main/ # Main thread (Electron application source)
-  - renderer/ # Renderer thread (VueJS application source)
-```
-
-## Using static files
-
-If you have any files that you want to copy over to the app directory after installation, you will need to add those files in your `src/main/static` directory.
-
-#### Referencing static files from your main process
-
-```ts
-/* Assumes src/main/static/myFile.txt exists */
-
-import {app} from 'electron';
-import {join} from 'path';
-import {readFileSync} from 'fs';
-
-const path = join(app.getAppPath(), 'static', 'myFile.txt');
-const buffer = readFileSync(path);
+     database <--CRUD--> electron:main <--Communication Via Preload.ts--> electron:renderer 
+     em_a <--build kb --> knowledge_base
 ```
