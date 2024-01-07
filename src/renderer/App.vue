@@ -96,7 +96,7 @@ const headers = [
   { text: "Measurement", value: "measurement" },
 ];
 
-const totalItems = ref(10);
+const totalItems = ref(1000000);
 const loading = ref(false);
 const search = ref("");
 const itemsPerPage = ref(10);
