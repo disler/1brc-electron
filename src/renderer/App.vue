@@ -145,6 +145,11 @@ function getBrcPage(params) {
       item-value="name"
       @update:options="loadItems"
     ></v-data-table-server>
+    <v-pagination
+      v-model="page"
+      :length="Math.ceil(totalItems / itemsPerPage)"
+      @input="loadItems"
+    ></v-pagination>
   </div>
 </template>
 
