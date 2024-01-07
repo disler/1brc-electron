@@ -6,11 +6,12 @@ export function getBrcPage(table: string, page: number, size: number): Promise<a
   return new Promise((resolve, reject) => {
     const db = new duckdb.Database(path.resolve(__dirname, '../../data', 'db.duckdb'));
     const offset = (page - 1) * size;
-    let sql = 'SELECT * FROM brc LIMIT ? OFFSET ?;';
+    let sqlText = 'SELECT * FROM brc LIMIT ? OFFSET ?;';
     if (table === 'measurements') {
-      sql = 'SELECT * FROM measurements LIMIT ? OFFSET ?;';
+      sqlText = 'SELECT * FROM measurements LIMIT ? OFFSET ?;';
     }
-    db.all(sql, [size, offset], function (err, res) {
+    const sql = db.prepare(sqlText);
+    sql.all([size, offset], function (err, res) {
       if (err) {
         reject(err);
       } else {
