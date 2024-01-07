@@ -1,10 +1,10 @@
-import {app, BrowserWindow, ipcMain, session} from 'electron';
-import {join} from 'path';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
+import { join } from 'path';
 
-function createWindow () {
+function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1400,
+    height: 1100,
     webPreferences: {
       preload: join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -15,6 +15,7 @@ function createWindow () {
   if (process.env.NODE_ENV === 'development') {
     const rendererPort = process.argv[2];
     mainWindow.loadURL(`http://localhost:${rendererPort}`);
+    mainWindow.webContents.openDevTools();
   }
   else {
     mainWindow.loadFile(join(app.getAppPath(), 'renderer', 'index.html'));
