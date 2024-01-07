@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useVuetify } from 'vuetify';
 
 interface Pagination {
   page: number;
@@ -26,11 +27,43 @@ const brcRows = ref<BrcRow[]>([
   { station: 'Station 9', min: 18, mean: 28, max: 38, measurement: 'Measurement 9' },
   { station: 'Station 10', min: 19, mean: 29, max: 39, measurement: 'Measurement 10' },
 ]);
+const vuetify = useVuetify();
+
+const headers = [
+  { text: 'Station', align: 'start', sortable: false, value: 'station' },
+  { text: 'Min', value: 'min' },
+  { text: 'Mean', value: 'mean' },
+  { text: 'Max', value: 'max' },
+  { text: 'Measurement', value: 'measurement' }
+];
+
+const totalItems = ref(10);
+const loading = ref(false);
+const search = ref('');
+
+function loadItems(options) {
+  // Here you would fetch data from the server based on the options
+  // For now, we'll just simulate loading
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 1000);
+}
 </script>
 
 <template>
   <div>
     <h1>1 Billion Row Challenge - Electron Edition</h1>
+    <v-data-table-server
+      v-model:items-per-page="itemsPerPage"
+      :headers="headers"
+      :items-length="totalItems.value"
+      :items="brcRows.value"
+      :loading="loading.value"
+      :search="search.value"
+      item-value="name"
+      @update:options="loadItems"
+    ></v-data-table-server>
   </div>
 </template>
 
