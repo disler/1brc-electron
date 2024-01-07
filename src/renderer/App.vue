@@ -102,6 +102,7 @@ const search = ref("");
 const itemsPerPage = ref(10);
 const page = ref(1);
 const table = ref("brc");
+import { watch } from 'vue';
 
 function loadItems() {
   const pagination: Pagination = {
@@ -125,6 +126,10 @@ onMounted(() => {
     itemsPerPage: itemsPerPage.value,
     page: page.value,
   });
+});
+
+watch(page, () => {
+  loadItems();
 });
 
 function getBrcPage(params) {
