@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
 
-window.electronAPI.sendMessage('Hello from App.vue!');
+window.electronAPI.sendMessage("Hello from App.vue!");
 </script>
 
 <template>

@@ -1,21 +1,23 @@
 {
-  "name": "electron-vue-template",
+  "name": "1brc-electron",
   "version": "0.1.0",
-  "description": "A minimal Electron + Vue application",
+  "description": "One Billion Row Challenge end to end desktop solution built using AI tech",
   "main": "build/main/main.js",
   "scripts": {
     "dev": "node scripts/dev-server.js",
+    "generate": "ts-node scripts/createMeasurements.ts",
     "build": "node scripts/build.js && electron-builder",
     "build:win": "node scripts/build.js && electron-builder --win",
     "build:mac": "node scripts/build.js && electron-builder --mac",
     "build:linux": "node scripts/build.js && electron-builder --linux"
   },
-  "repository": "https://github.com/deluze/electron-vue-template",
+  "repository": "https://github.com/disler/1brc-electron.git",
   "author": {
-    "name": "Deluze",
-    "url": "https://github.com/Deluze"
+    "name": "IndyDevDan",
+    "url": "https://github.com/disler/1brc-electron"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@vitejs/plugin-vue": "^4.4.1",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
@@ -25,6 +27,13 @@
     "vite": "^4.5.0"
   },
   "dependencies": {
-    "vue": "^3.3.8"
+    "axios": "^1.6.5",
+    "cheerio": "^1.0.0-rc.12",
+    "duckdb": "^0.9.2",
+    "lodash": "^4.17.21",
+    "openai": "^4.24.1",
+    "ts-node": "^10.9.2",
+    "vue": "^3.3.8",
+    "vuetify": "^3.4.9"
   }
 }
