@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { ipcRenderer } from 'electron';
-import { ref } from "vue";
+import { ipcRenderer } from "electron";
 
 interface Pagination {
   page: number;
@@ -101,19 +100,30 @@ const totalItems = ref(10);
 const loading = ref(false);
 const search = ref("");
 const itemsPerPage = ref(10);
+const page = ref(1);
+const table = ref("brc");
 
-function loadItems(options) {
-  // Here you would fetch data from the server based on the options
-  // For now, we'll just simulate loading
+function loadItems() {
+  const pagination: Pagination = {
+    table: table.value,
+    page: page.value,
+    itemsPerPage: itemsPerPage.value,
+  };
+
+  window.electronAPI.getBrcPage(pagination);
+
   loading.value = true;
-  setTimeout(() => {
-    loading.value = false;
-  }, 1000);
 }
 onMounted(() => {
-  window.electronAPI.on('brc-data', (data) => {
-    // Handle the data received from the main process
-    console.log('Data received from main process:', data);
+  window.electronAPI.on("getBrcPageResponse", (data, payload) => {
+    loading.value = false;
+    brcRows.value = payload;
+    console.log("Data received from main process:", payload);
+  });
+  window.electronAPI.getBrcPage({
+    table: table.value,
+    itemsPerPage: itemsPerPage.value,
+    page: page.value,
   });
 });
 
