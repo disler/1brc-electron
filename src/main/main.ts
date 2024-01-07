@@ -1,6 +1,13 @@
 import { app, BrowserWindow, ipcMain, session } from 'electron';
 import { join } from 'path';
 
+ipcMain.on('get-brc-page', (event, params) => {
+  // This is a stub for the actual implementation
+  console.log('get-brc-page called with params:', params);
+  // Simulate sending data back to the renderer process
+  event.sender.send('brc-data', { data: 'This is a stubbed response' });
+});
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1400,

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { ipcRenderer } from 'electron';
 import { ref } from "vue";
 
 interface Pagination {
@@ -107,6 +109,16 @@ function loadItems(options) {
   setTimeout(() => {
     loading.value = false;
   }, 1000);
+}
+onMounted(() => {
+  window.electronAPI.on('brc-data', (data) => {
+    // Handle the data received from the main process
+    console.log('Data received from main process:', data);
+  });
+});
+
+function getBrcPage(params) {
+  window.electronAPI.getBrcPage(params);
 }
 </script>
 
