@@ -2,7 +2,6 @@ import {
     Turbo4, TurboTool,
 } from "../src/main/turbo4"
 import path from 'path'
-import duckdb from "duckdb"
 import fs from "fs"
 
 const agentOutput = path.join(__dirname, '../', 'data', 'agentOutput')
@@ -57,8 +56,8 @@ async function main() {
     // knowledge base file paths
 
     const agentSpyFile = path.join(agentOutput, 'agent-spyware.json')
-    const blogKnolwedgeBasePath = path.join(agentOutput, 'one-billion-row-challenge-duck-db.json')
-    const docsKnolwedgeBasePath = path.join(agentOutput, 'duck-db-docs.json')
+    const blogKnowledgeBasePath = path.join(agentOutput, 'one-billion-row-challenge-duck-db.json')
+    const docsKnowledgeBasePath = path.join(agentOutput, 'duck-db-docs.json')
 
     // assistant
 
@@ -68,10 +67,10 @@ async function main() {
 
     await turbo4.enableRetrieval()
 
-    await turbo4.collectKnowledge(duckdbBlogKnowledgeSource, blogKnolwedgeBasePath)
-    await turbo4.collectKnowledge(duckdbDocsKnowledgeSource, docsKnolwedgeBasePath)
+    await turbo4.collectKnowledge(duckdbBlogKnowledgeSource, blogKnowledgeBasePath)
+    await turbo4.collectKnowledge(duckdbDocsKnowledgeSource, docsKnowledgeBasePath)
 
-    const [blogFileId, docsFileId] = await turbo4.upsertFiles([blogKnolwedgeBasePath, docsKnolwedgeBasePath], false)
+    const [blogFileId, docsFileId] = await turbo4.upsertFiles([blogKnowledgeBasePath, docsKnowledgeBasePath], false)
 
     await turbo4.equipTools([writeFileToolDef])
 

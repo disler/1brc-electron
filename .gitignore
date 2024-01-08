@@ -8,7 +8,5 @@ build
 .env
 .aider*
 
-**measurements.txt
 **m100mil.txt
-**measurements.txt
 **/*.duckdb
