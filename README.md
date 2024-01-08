@@ -1,7 +1,7 @@
 # 1 Billion Row Challenge with Electron, DuckDB, Prompts, Cursor and Aider
 > Progressing our Agentic engineering abilities by building a 1 billion row challenge app with Electron, DuckDB, Prompts, Cursor and Aider
 
-qqq add thumbnail here
+![1brc](img/1brc.png)
 
 ## Setup
 - `brew install duckdb` (mac see [docs for other platforms](https://duckdb.org/docs/installation/?version=latest&environment=cli&installer=binary&platform=win))
