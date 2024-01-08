@@ -6,23 +6,25 @@ qqq add thumbnail here
 ## Setup
 - `yarn install`
 - `cp .env.sample .env` - Update the .env file with your openai key
-- `yarn run generate <number of rows>` - Generate the data
+- `yarn run generate <number of rows>` - Generate the data (optional)
   - *'I wrote the generation script (scripts/createMeasurements.ts) based off the original implementation, to be memory efficient for node, but it still takes a while to generate the data since node is (relatively) hella slow.'*
   - *'On my M2 64gb ram 1 billion rows took ~8 minutes to generate'. Adjust accordingly.*
   - *'I recommend generating 1mil rows'*
-- `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql` - Create the tables based on `data/measurements.txt`
+  - *'The committed `data/measurements.txt` is 1 million rows'*
+- `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql` - Create the tables based on `data/measurements.txt` (optional)
 - `yarn run dev` - Start the app
 
 ### Resources
-- Original Electron + Vite + Vue + Typescript [Starter](https://github.com/Deluze/electron-vue-template)
-- [1 BRC Original](https://www.morling.dev/blog/one-billion-row-challenge/)
-- [1 BRC DuckDB Post](https://rmoff.net/2024/01/03/1%EF%B8%8F%E2%83%A3%EF%B8%8F-1brc-in-sql-with-duckdb/)
+- [1 Billion Row Challenge Original](https://www.morling.dev/blog/one-billion-row-challenge/)
+- [1 Billion Row Challenge DuckDB](https://rmoff.net/2024/01/03/1%EF%B8%8F%E2%83%A3%EF%B8%8F-1brc-in-sql-with-duckdb/)
+- [DuckDB Docs](https://duckdb.org/)
 - [Aider](https://aider.chat/)
 - [Cursor](https://cursor.sh/)
 - [Electron Vite Vue Typescript Starter](https://github.com/Deluze/electron-vue-template)
 - [Vuetify Server Table](https://vuetifyjs.com/en/components/data-tables/server-side-tables/#examples)
 - [Vuetify Pagination](https://vuetifyjs.com/en/components/paginations/#disabled)
 - [Electron](https://www.electronjs.org/)
+- [LLM In CLI](https://github.com/simonw/llm)
 
 ## Primary DuckDB Generation Commands
 - Prove our agents did their jobs
@@ -51,7 +53,7 @@ qqq add thumbnail here
 ## Checkout the video where we built this
 - [Youtube](https://youtu.be/E6bcyo32zss)
 
-## Diagraming
+## Arch Diagrams
 
 ### Tier 1 Detail
 
