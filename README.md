@@ -4,6 +4,7 @@
 qqq add thumbnail here
 
 ## Setup
+- `brew install duckdb` (mac see [docs for other platforms](https://duckdb.org/docs/installation/?version=latest&environment=cli&installer=binary&platform=win))
 - `yarn install`
 - `cp .env.sample .env` - Update the .env file with your openai key
 - `yarn run generate <number of rows>` - Generate the data (optional)
