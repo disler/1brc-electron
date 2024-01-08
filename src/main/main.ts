@@ -1,12 +1,7 @@
 import { app, BrowserWindow, ipcMain, session } from 'electron';
 import { join } from 'path';
+import { getBrcPage } from "./pageTable";
 
-ipcMain.on('get-brc-page', (event, params) => {
-  // This is a stub for the actual implementation
-  console.log('get-brc-page called with params:', params);
-  // Simulate sending data back to the renderer process
-  event.sender.send('brc-data', { data: 'This is a stubbed response' });
-});
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -57,3 +52,11 @@ app.on('window-all-closed', function () {
 ipcMain.on('message', (event, message) => {
   console.log(message);
 })
+
+ipcMain.on('getBrcPage', async (event, params) => {
+  console.log('getBrcPage called with params:', params);
+
+  const items = await getBrcPage(params.table, params.page, params.itemsPerPage);
+
+  event.sender.send('getBrcPageResponse', items);
+});

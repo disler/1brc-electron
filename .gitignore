@@ -12,3 +12,5 @@ build
 **m100mil.txt
 **measurements.txt
 **/*.duckdb
+
+data/agentOutput/**

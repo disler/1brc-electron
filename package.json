@@ -5,6 +5,7 @@
   "main": "build/main/main.js",
   "scripts": {
     "dev": "node scripts/dev-server.js",
+    "agent": "ts-node scripts/agentOps.ts",
     "generate": "ts-node scripts/createMeasurements.ts",
     "build": "node scripts/build.js && electron-builder",
     "build:win": "node scripts/build.js && electron-builder --win",

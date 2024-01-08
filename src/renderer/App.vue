@@ -15,78 +15,7 @@ interface BrcRow {
   max: number;
   measurement: string;
 }
-const brcRows = ref<BrcRow[]>([
-  {
-    station: "Station 1",
-    min: 10,
-    mean: 20,
-    max: 30,
-    measurement: "Measurement 1",
-  },
-  {
-    station: "Station 2",
-    min: 11,
-    mean: 21,
-    max: 31,
-    measurement: "Measurement 2",
-  },
-  {
-    station: "Station 3",
-    min: 12,
-    mean: 22,
-    max: 32,
-    measurement: "Measurement 3",
-  },
-  {
-    station: "Station 4",
-    min: 13,
-    mean: 23,
-    max: 33,
-    measurement: "Measurement 4",
-  },
-  {
-    station: "Station 5",
-    min: 14,
-    mean: 24,
-    max: 34,
-    measurement: "Measurement 5",
-  },
-  {
-    station: "Station 6",
-    min: 15,
-    mean: 25,
-    max: 35,
-    measurement: "Measurement 6",
-  },
-  {
-    station: "Station 7",
-    min: 16,
-    mean: 26,
-    max: 36,
-    measurement: "Measurement 7",
-  },
-  {
-    station: "Station 8",
-    min: 17,
-    mean: 27,
-    max: 37,
-    measurement: "Measurement 8",
-  },
-  {
-    station: "Station 9",
-    min: 18,
-    mean: 28,
-    max: 38,
-    measurement: "Measurement 9",
-  },
-  {
-    station: "Station 10",
-    min: 19,
-    mean: 29,
-    max: 39,
-    measurement: "Measurement 10",
-  },
-]);
+const brcRows = ref<BrcRow[]>([]);
 
 const headers = [
   {
@@ -94,24 +23,39 @@ const headers = [
     title: "Station",
     sortable: false,
     value: "station",
+    table: "brc",
+  },
+  {
+    align: "center",
+    title: "Station",
+    sortable: false,
+    value: "station_name",
+    table: "measurements",
   },
   { align: "center", title: "Min", value: "min", table: "brc" },
   { align: "center", title: "Mean", value: "mean", table: "brc" },
   { align: "center", title: "Max", value: "max", table: "brc" },
-  { align: "center", title: "Measurement", value: "measurement", table: "measurements" },
+  {
+    align: "center",
+    title: "Measurement",
+    value: "measurement",
+    table: "measurements",
+  },
 ];
 
-const brcHeaders = headers.filter(header => header.table === 'brc');
-const measurementsHeaders = headers.filter(header => header.table === 'measurements');
+const brcHeaders = headers.filter((header) => header.table === "brc");
+const measurementsHeaders = headers.filter(
+  (header) => header.table === "measurements"
+);
 
-const totalItems = ref(1000000);
+const totalItems = ref(1000000000);
 const loading = ref(false);
 const search = ref("");
 const itemsPerPage = ref(10);
 const page = ref(1);
 const table = ref("brc");
-const tables = ref(['brc', 'measurements']);
-const selectedTable = ref('brc');
+const tables = ref(["brc", "measurements"]);
+const selectedTable = ref("brc");
 import { watch } from "vue";
 
 function loadItems() {
@@ -162,14 +106,15 @@ function getBrcPage(params) {
     ></v-select>
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
-      :headers="headers"
-      :headers="table.value === 'brc' ? brcHeaders : measurementsHeaders"
+      :headers="table === 'brc' ? brcHeaders : measurementsHeaders"
       :items-length="totalItems"
       :items="brcRows"
       :loading="loading"
       :search="search"
       item-value="name"
+      :items-per-page-options="[10, 100, 1000, 10000, 100000]"
       @update:options="loadItems"
+      :height="500"
     ></v-data-table-server>
     <v-pagination
       v-model="page"
