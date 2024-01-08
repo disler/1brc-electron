@@ -1,12 +1,16 @@
 # 1 Billion Row Challenge with Electron, DuckDB, Prompts, Cursor and Aider
 > Progressing our Agentic engineering abilities by building a 1 billion row challenge app with Electron, DuckDB, Prompts, Cursor and Aider
 
+qqq add thumbnail here
+
 ## Setup
 - `yarn install`
 - `cp .env.sample .env` - Update the .env file with your openai key
 - `yarn run generate <number of rows>` - Generate the data
-  - *'I wrote the generation script (scripts/createMeasurements.ts) to be memory efficient, but it still takes a while to generate the data.'*
+  - *'I wrote the generation script (scripts/createMeasurements.ts) based off the original implementation, to be memory efficient for node, but it still takes a while to generate the data since node is (relatively) hella slow.'*
   - *'On my M2 64gb ram 1 billion rows took ~8 minutes to generate'. Adjust accordingly.*
+  - *'I recommend generating 1mil rows'*
+- `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql` - Create the tables based on `data/measurements.txt`
 - `yarn run dev` - Start the app
 
 ### Resources
@@ -20,6 +24,15 @@
 - [Vuetify Pagination](https://vuetifyjs.com/en/components/paginations/#disabled)
 - [Electron](https://www.electronjs.org/)
 
+## Primary DuckDB Generation Commands
+- Prove our agents did their jobs
+  - `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql`
+  - `duckdb ./data/db.duckdb .tables`
+  - `duckdb ./data/db.duckdb from measurements limit 5`
+  - `duckdb ./data/db.duckdb from brc limit 5`
+- Run page table script
+  - `bun ./data/agentOutput/pageTable.ts`
+  - 
 ## DuckDB Commands
 - `duckdb` - Start DuckDB Shell
 - In the shell
@@ -35,14 +48,8 @@
 ## Generate the Data
 - `yarn run generate <number of rows>`
 
-## Duck DB Generation Commands
-- Prove our agents did their jobs
-  - `duckdb ./data/db.duckdb < ./data/agentOutput/generate-table.sql`
-  - `duckdb ./data/db.duckdb .tables`
-  - `duckdb ./data/db.duckdb from measurements limit 5`
-  - `duckdb ./data/db.duckdb from brc limit 5`
-- Run page table script
-  - `bun ./data/agentOutput/pageTable.ts`
+## Checkout the video where we built this
+- [Youtube](https://youtu.be/E6bcyo32zss)
 
 ## Diagraming
 
